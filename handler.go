@@ -51,6 +51,16 @@ func (m *methods) On(method string, f interface{}) error {
 
 	return nil
 }
+/**
+Remove corresponding message processing functions bound to supplied methods 
+ */
+func (m *methods) RemoveHandlers(methods []string) {
+	m.messageHandlersLock.Lock()
+	defer m.messageHandlersLock.Unlock()
+	for i := 0; i < len(methods); i++ {
+		delete(m.messageHandlers, methods[i])
+	}
+}
 
 /**
 Find message processing function associated with given method
